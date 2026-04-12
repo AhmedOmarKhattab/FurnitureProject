@@ -1,0 +1,1570 @@
+﻿@model X.PagedList.IPagedList<Product>
+@{
+    ViewData["Title"] = "نخبة الأثاث — أثّث منزلك بأناقة لا تُنسى";
+}
+
+<style>
+    /* ════════════════════════════════════════
+           TOKENS  (inherited from layout, redeclared for safety)
+        ════════════════════════════════════════ */
+    :root {
+        --sand: #F5F0E8;
+        --sand2: #EDE5D5;
+        --bark: #3D2B1F;
+        --bark2: #5C3D2E;
+        --gold: #C49A3C;
+        --gold2: #E8B84B;
+        --cream: #FDFAF5;
+        --text: #1C1208;
+        --muted: #7A6652;
+        --white: #FFFFFF;
+        --green: #2D5016;
+        --green2: #4A7C2E;
+        --bounce: cubic-bezier(.34,1.56,.64,1);
+    }
+
+    /* ════════════════════════════════════════
+           SHARED HELPERS
+        ════════════════════════════════════════ */
+    .fu-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+
+    .fu-eyebrow {
+        display: inline-block;
+        background: linear-gradient(135deg, #F5EDD5, #EDE0B5);
+        border: 1px solid rgba(196,154,60,.35);
+        color: var(--bark);
+        font-size: .78rem;
+        font-weight: 800;
+        padding: .35rem 1rem;
+        border-radius: 50px;
+        margin-bottom: .75rem;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .fu-section-title {
+        font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+        font-weight: 900;
+        color: var(--bark);
+        margin-bottom: .4rem;
+        line-height: 1.25;
+    }
+
+        .fu-section-title span {
+            color: var(--gold);
+        }
+
+    .fu-divider {
+        width: 56px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--gold), var(--gold2));
+        border-radius: 2px;
+        margin: .6rem auto 0;
+    }
+
+    .fu-section-sub {
+        color: var(--muted);
+        font-weight: 600;
+        margin-top: .75rem;
+        font-size: .95rem;
+    }
+
+    /* Buttons */
+    .btn-bark {
+        background: var(--bark);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        transition: background .2s, transform .25s var(--bounce);
+        font-family: 'Cairo', sans-serif;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn-bark:hover {
+            background: var(--bark2);
+            transform: translateY(-3px) scale(1.03);
+            color: white;
+        }
+
+    .btn-outline-bark {
+        background: transparent;
+        color: var(--bark);
+        border: 2px solid var(--bark);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        transition: all .25s var(--bounce);
+        font-family: 'Cairo', sans-serif;
+        text-decoration: none;
+    }
+
+        .btn-outline-bark:hover {
+            background: var(--bark);
+            color: white;
+            transform: translateY(-3px) scale(1.03);
+        }
+
+    .btn-gold {
+        background: var(--gold);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        transition: all .25s var(--bounce);
+        font-family: 'Cairo', sans-serif;
+        text-decoration: none;
+    }
+
+        .btn-gold:hover {
+            background: var(--gold2);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+
+    /* ════════════════════════════════════════
+           HERO
+        ════════════════════════════════════════ */
+    .fu-hero {
+        min-height: 92vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 3rem;
+        padding: 3.5rem 2.5rem;
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        background: linear-gradient(135deg, #F5F0E8, #EDE5D5);
+        border: 1px solid rgba(196,154,60,.4);
+        color: var(--bark);
+        padding: .42rem 1rem;
+        border-radius: 50px;
+        font-size: .82rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+    }
+
+        .hero-eyebrow i {
+            color: var(--gold);
+        }
+
+    .hero-title {
+        font-size: clamp(2.8rem, 4.5vw, 4.3rem);
+        font-weight: 900;
+        line-height: 1.2;
+        color: var(--bark);
+        margin-bottom: 1.25rem;
+    }
+
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--gold), var(--gold2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-title .hero-green {
+            color: var(--green2);
+        }
+
+    .hero-desc {
+        font-size: 1.05rem;
+        color: var(--muted);
+        font-weight: 600;
+        line-height: 1.9;
+        margin-bottom: 2.25rem;
+        max-width: 440px;
+    }
+
+    .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-stat {
+        background: white;
+        border-radius: 14px;
+        padding: .7rem 1.2rem;
+        border: 1px solid var(--sand2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: border-color .2s, transform .2s var(--bounce);
+    }
+
+        .hero-stat:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+    .hero-stat-num {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1.2;
+    }
+
+    .hero-stat-lbl {
+        font-size: .72rem;
+        font-weight: 700;
+        color: var(--muted);
+    }
+
+    /* Hero image panel */
+    .hero-visual {
+        position: relative;
+        border-radius: 32px;
+        overflow: hidden;
+        height: 580px;
+        box-shadow: 0 40px 80px rgba(61,43,31,.18);
+        flex-shrink: 0;
+    }
+
+    .hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 6s ease;
+    }
+
+    .hero-visual:hover .hero-img {
+        transform: scale(1.04);
+    }
+
+    .hero-img-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(160deg, transparent 50%, rgba(61,43,31,.45));
+    }
+
+    .hero-top-badge {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: var(--gold);
+        color: white;
+        font-weight: 800;
+        font-size: .78rem;
+        padding: .4rem 1rem;
+        border-radius: 50px;
+    }
+
+    .hero-card {
+        position: absolute;
+        bottom: 1.75rem;
+        right: 1.75rem;
+        background: rgba(253,250,245,.93);
+        backdrop-filter: blur(8px);
+        border-radius: 18px;
+        padding: 1rem 1.25rem;
+        border: 1px solid rgba(196,154,60,.3);
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        box-shadow: 0 8px 32px rgba(61,43,31,.12);
+    }
+
+    .hero-card-icon {
+        font-size: 28px;
+    }
+
+    .hero-card-title {
+        font-weight: 800;
+        font-size: .9rem;
+        color: var(--bark);
+    }
+
+    .hero-card-sub {
+        font-size: .72rem;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+
+    /* ════════════════════════════════════════
+           BANNER STRIP
+        ════════════════════════════════════════ */
+    .fu-banner {
+        background: var(--bark);
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3.5rem;
+        flex-wrap: wrap;
+    }
+
+    .fu-banner-item {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: rgba(255,255,255,.9);
+        font-weight: 700;
+        font-size: .9rem;
+    }
+
+        .fu-banner-item i {
+            font-size: 1.2rem;
+            opacity: .85;
+        }
+
+    .fu-banner-sep {
+        width: 1px;
+        height: 20px;
+        background: rgba(255,255,255,.18);
+    }
+
+
+    /* ════════════════════════════════════════
+           CATEGORIES
+        ════════════════════════════════════════ */
+    .cats-section {
+        padding: 5rem 2.5rem;
+        background: var(--cream);
+    }
+
+    .cats-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1.1rem;
+    }
+
+    .cat-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.6rem .85rem;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all .3s var(--bounce);
+        box-shadow: 0 2px 12px rgba(61,43,31,.05);
+    }
+
+        .cat-card:hover {
+            transform: translateY(-9px);
+            border-color: var(--gold);
+            box-shadow: 0 16px 40px rgba(196,154,60,.2);
+        }
+
+        .cat-card .cat-ico {
+            font-size: 2.3rem;
+            margin-bottom: .6rem;
+            display: block;
+            transition: transform .3s var(--bounce);
+        }
+
+        .cat-card:hover .cat-ico {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+    .cat-name {
+        font-size: .82rem;
+        font-weight: 800;
+        color: var(--bark);
+        margin: 0 0 .2rem;
+    }
+
+    .cat-count {
+        font-size: .72rem;
+        font-weight: 600;
+        color: var(--muted);
+    }
+
+
+    /* ════════════════════════════════════════
+           PRODUCTS
+        ════════════════════════════════════════ */
+    .products-section {
+        padding: 5rem 2.5rem;
+        background: linear-gradient(180deg, var(--cream) 0%, var(--sand) 60%, var(--cream) 100%);
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .pcard {
+        background: white;
+        border-radius: 22px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border: 1.5px solid transparent;
+        box-shadow: 0 4px 20px rgba(61,43,31,.07);
+        transition: all .3s var(--bounce);
+    }
+
+        .pcard:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold2);
+            box-shadow: 0 24px 56px rgba(196,154,60,.18);
+        }
+
+    .pcard-img {
+        position: relative;
+        overflow: hidden;
+        background: var(--sand);
+        height: 220px;
+    }
+
+    .pcard-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s var(--bounce);
+    }
+
+    .pcard:hover .pcard-photo {
+        transform: scale(1.07);
+    }
+
+    .pcard-badge {
+        position: absolute;
+        top: .85rem;
+        right: .85rem;
+        padding: .28rem .8rem;
+        border-radius: 50px;
+        font-size: .68rem;
+        font-weight: 800;
+        color: white;
+        z-index: 1;
+    }
+
+    .badge-new {
+        background: var(--green2);
+    }
+
+    .badge-hot {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+    }
+
+    .badge-sale {
+        background: var(--gold);
+    }
+
+    .pcard-wish {
+        position: absolute;
+        top: .85rem;
+        left: .85rem;
+        background: white;
+        border: none;
+        cursor: pointer;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.1);
+        transition: transform .2s var(--bounce);
+        z-index: 1;
+    }
+
+        .pcard-wish:hover {
+            transform: scale(1.3);
+        }
+
+    .pcard-body {
+        padding: 1.1rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: .45rem;
+    }
+
+    .pcard-cat {
+        display: inline-block;
+        background: var(--sand);
+        color: var(--muted);
+        font-size: .68rem;
+        font-weight: 800;
+        padding: .2rem .65rem;
+        border-radius: 50px;
+        width: fit-content;
+    }
+
+    .pcard-name {
+        font-weight: 800;
+        font-size: .95rem;
+        color: var(--bark);
+        line-height: 1.45;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .pcard-stars {
+        display: flex;
+        align-items: center;
+        gap: .3rem;
+        font-size: .82rem;
+    }
+
+    .stars-gold {
+        color: var(--gold);
+    }
+
+    .stars-muted {
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .pcard-stock {
+        display: inline-flex;
+        align-items: center;
+        gap: .3rem;
+        background: #e0f2fe;
+        color: #0284c7;
+        font-size: .68rem;
+        font-weight: 800;
+        padding: .18rem .65rem;
+        border-radius: 50px;
+        width: fit-content;
+    }
+
+    .pcard-price {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--bark);
+    }
+
+        .pcard-price span {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-left: .25rem;
+        }
+
+    .pcard-btn {
+        margin-top: auto;
+        padding: .78rem;
+        background: var(--bark);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: .9rem;
+        font-family: 'Cairo', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .4rem;
+        transition: all .2s var(--bounce);
+        text-decoration: none;
+    }
+
+        .pcard-btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: white;
+        border-radius: 24px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--bark);
+        margin-bottom: .5rem;
+    }
+
+    .empty-text {
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    /* Pagination */
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .pagination-custom {
+        display: flex;
+        gap: .5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-item-custom a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        height: 44px;
+        padding: .5rem 1rem;
+        background: white;
+        color: var(--bark);
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 800;
+        border: 1px solid var(--sand2);
+        transition: all .2s var(--bounce);
+        font-family: 'Cairo', sans-serif;
+    }
+
+        .page-item-custom a:hover,
+        .page-item-custom.active a {
+            background: var(--bark);
+            color: white;
+            border-color: var(--bark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(61,43,31,.25);
+        }
+
+
+    /* ════════════════════════════════════════
+           SHOWCASE  (why us)
+        ════════════════════════════════════════ */
+    .showcase-section {
+        background: var(--bark);
+        padding: 5rem 2.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .showcase-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(196,154,60,.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+    .showcase-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .sc-imgs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .sc-img {
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 1;
+    }
+
+        .sc-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s;
+        }
+
+        .sc-img:hover img {
+            transform: scale(1.06);
+        }
+
+    .sc-img-wide {
+        grid-column: 1 / 3;
+        aspect-ratio: 2 / 1;
+    }
+
+    .showcase-text .fu-eyebrow {
+        background: rgba(196,154,60,.2);
+        color: var(--gold2);
+        border-color: rgba(196,154,60,.3);
+    }
+
+    .showcase-text .fu-section-title {
+        color: white;
+        text-align: right;
+        font-size: 2rem;
+    }
+
+    .showcase-text .fu-section-sub {
+        text-align: right;
+        color: rgba(255,255,255,.6);
+        margin-top: 0;
+    }
+
+    .sc-list {
+        list-style: none;
+        margin: 1.75rem 0 2rem;
+    }
+
+        .sc-list li {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            color: rgba(255,255,255,.85);
+            font-weight: 600;
+            font-size: .92rem;
+            padding: .4rem 0;
+        }
+
+    .sc-check {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--gold);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: white;
+        flex-shrink: 0;
+    }
+
+
+    /* ════════════════════════════════════════
+           ROOMS  (inspiration gallery)
+        ════════════════════════════════════════ */
+    .rooms-section {
+        padding: 5rem 2.5rem;
+    }
+
+    .rooms-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 1.25rem;
+    }
+
+    .room-card {
+        border-radius: 24px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: transform .3s var(--bounce);
+    }
+
+        .room-card:hover {
+            transform: scale(1.02);
+        }
+
+        .room-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s;
+        }
+
+        .room-card:hover img {
+            transform: scale(1.07);
+        }
+
+    .room-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(160deg, transparent 40%, rgba(28,18,8,.58));
+    }
+
+    .room-label {
+        position: absolute;
+        bottom: 1.1rem;
+        right: 1.1rem;
+        background: rgba(253,250,245,.92);
+        backdrop-filter: blur(6px);
+        padding: .45rem 1rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: .82rem;
+        color: var(--bark);
+    }
+
+    .room-tall {
+        grid-row: 1 / 3;
+        height: 100%;
+    }
+
+        .room-tall img {
+            height: 461px;
+        }
+
+    .room-sq {
+        height: 220px;
+    }
+
+        .room-sq img {
+            height: 220px;
+        }
+
+
+    /* ════════════════════════════════════════
+           TESTIMONIALS
+        ════════════════════════════════════════ */
+    .testimonials-section {
+        padding: 5rem 2.5rem;
+        background: var(--sand);
+    }
+
+    .tests-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .tcard {
+        background: white;
+        border-radius: 22px;
+        padding: 1.75rem;
+        box-shadow: 0 4px 20px rgba(61,43,31,.05);
+        border-top: 4px solid;
+        transition: transform .3s var(--bounce);
+    }
+
+        .tcard:nth-child(1) {
+            border-color: var(--gold);
+        }
+
+        .tcard:nth-child(2) {
+            border-color: var(--green2);
+        }
+
+        .tcard:nth-child(3) {
+            border-color: var(--bark2);
+        }
+
+        .tcard:hover {
+            transform: translateY(-6px);
+        }
+
+    .tcard-head {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        margin-bottom: 1rem;
+    }
+
+    .tavatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+    .av1 {
+        background: linear-gradient(135deg, #F5EDD5, #EDE0B5);
+    }
+
+    .av2 {
+        background: linear-gradient(135deg, #D5E8D5, #B5D5B5);
+    }
+
+    .av3 {
+        background: linear-gradient(135deg, #D5DEF5, #B5C5E8);
+    }
+
+    .tname {
+        font-weight: 800;
+        font-size: .9rem;
+        color: var(--bark);
+    }
+
+    .trole {
+        font-size: .72rem;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .tstars {
+        color: var(--gold);
+        font-size: .9rem;
+        margin-bottom: .65rem;
+    }
+
+    .ttext {
+        font-size: .88rem;
+        line-height: 1.85;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .tproduct {
+        display: inline-block;
+        margin-top: .75rem;
+        font-size: .75rem;
+        font-weight: 800;
+        background: var(--sand);
+        color: var(--muted);
+        padding: .25rem .75rem;
+        border-radius: 50px;
+    }
+
+
+    /* ════════════════════════════════════════
+           NEWSLETTER
+        ════════════════════════════════════════ */
+    .newsletter-section {
+        padding: 5rem 2.5rem;
+        background: linear-gradient(135deg, #2D1B0E, #4A2C18);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .newsletter-section::before {
+            content: '🛋️ 🪑 🛏️ 🪞 🏮 🪴 🛋️ 🪑 🛏️ 🪞 🏮 🪴';
+            position: absolute;
+            bottom: .75rem;
+            left: 0;
+            right: 0;
+            font-size: 1.4rem;
+            letter-spacing: 1rem;
+            opacity: .1;
+            white-space: nowrap;
+        }
+
+    .nl-inner {
+        max-width: 560px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .nl-badge {
+        display: inline-block;
+        background: var(--gold);
+        color: white;
+        font-weight: 800;
+        font-size: .8rem;
+        padding: .35rem 1rem;
+        border-radius: 50px;
+        margin-bottom: 1.25rem;
+    }
+
+    .nl-title {
+        font-size: 2.3rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: .65rem;
+        line-height: 1.3;
+    }
+
+        .nl-title span {
+            color: var(--gold2);
+        }
+
+    .nl-sub {
+        color: rgba(255,255,255,.6);
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+
+    .nl-form {
+        display: flex;
+        gap: .75rem;
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .nl-input {
+        flex: 1;
+        padding: .9rem 1.25rem;
+        background: rgba(255,255,255,.08);
+        border: 1.5px solid rgba(255,255,255,.15);
+        border-radius: 50px;
+        color: white;
+        font-size: .9rem;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 600;
+        text-align: right;
+    }
+
+        .nl-input::placeholder {
+            color: rgba(255,255,255,.35);
+        }
+
+        .nl-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+    .nl-btn {
+        padding: .9rem 1.6rem;
+        background: var(--gold);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 800;
+        font-size: .9rem;
+        white-space: nowrap;
+        transition: all .25s var(--bounce);
+    }
+
+        .nl-btn:hover {
+            background: var(--gold2);
+            transform: translateY(-2px);
+        }
+
+    .nl-note {
+        font-size: .75rem;
+        color: rgba(255,255,255,.3);
+        margin-top: 1rem;
+        font-weight: 600;
+    }
+
+
+    /* ════════════════════════════════════════
+           SCROLL REVEAL BASE
+        ════════════════════════════════════════ */
+    .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity .55s ease, transform .55s var(--bounce);
+    }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+    /* ════════════════════════════════════════
+           RESPONSIVE
+        ════════════════════════════════════════ */
+    @@media (max-width: 1100px) {
+        .cats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 900px) {
+        .fu-hero {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .hero-desc {
+            margin: 0 auto 2rem;
+        }
+
+        .hero-btns {
+            justify-content: center;
+        }
+
+        .hero-stats {
+            justify-content: center;
+        }
+
+        .hero-visual {
+            height: 340px;
+        }
+
+        .showcase-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .rooms-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .room-tall {
+            grid-row: auto;
+        }
+
+        .tests-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .nl-form {
+            flex-direction: column;
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .cats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .rooms-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .fu-banner {
+            gap: 1.25rem;
+        }
+    }
+</style>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="fu-hero">
+    <div class="hero-text">
+        <div class="hero-eyebrow">
+            <i class="bi bi-star-fill"></i> معرض أثاث فاخر — تأسس 2005
+        </div>
+        <h1 class="hero-title">
+            أثّث منزلك<br />
+            <span class="accent">بأناقة</span><br />
+            <span class="hero-green">لا تُنسى</span>
+        </h1>
+        <p class="hero-desc">
+            اكتشف تشكيلة فريدة من أفخر قطع الأثاث المصنوعة يدوياً، المصمّمة لتحوّل كل زاوية في منزلك إلى لوحة فنية تعكس ذوقك الرفيع.
+        </p>
+        <div class="hero-btns">
+            <a asp-action="ShowProducts" class="btn-bark">
+                <i class="bi bi-grid-fill"></i> تسوّق الآن
+            </a>
+            <a href="#" class="btn-outline-bark">
+                <i class="bi bi-pencil-square"></i> طلب تصميم مخصص
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num">+15,000</span>
+                <span class="hero-stat-lbl">عميل سعيد</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">+3,500</span>
+                <span class="hero-stat-lbl">قطعة أثاث</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">20 عاماً</span>
+                <span class="hero-stat-lbl">خبرة وإتقان</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <img class="hero-img"
+             src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&auto=format&fit=crop"
+             alt="غرفة معيشة فاخرة" />
+        <div class="hero-img-overlay"></div>
+        <span class="hero-top-badge">🏆 الأفضل في المملكة 2024</span>
+        <div class="hero-card">
+            <span class="hero-card-icon">🛋️</span>
+            <div>
+                <div class="hero-card-title">جلسة رويال كلاسيك</div>
+                <div class="hero-card-sub">من 4,800 ر.س — توصيل مجاني</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     BANNER STRIP
+══════════════════════════════════════════ -->
+<div class="fu-banner">
+    <div class="fu-banner-item"><i class="bi bi-truck"></i> توصيل مجاني للمنزل</div>
+    <div class="fu-banner-sep"></div>
+    <div class="fu-banner-item"><i class="bi bi-shield-check"></i> ضمان 10 سنوات</div>
+    <div class="fu-banner-sep"></div>
+    <div class="fu-banner-item"><i class="bi bi-arrow-counterclockwise"></i> إرجاع خلال 30 يوماً</div>
+    <div class="fu-banner-sep"></div>
+    <div class="fu-banner-item"><i class="bi bi-palette"></i> تخصيص كامل للقطعة</div>
+    <div class="fu-banner-sep"></div>
+    <div class="fu-banner-item"><i class="bi bi-credit-card"></i> تقسيط بدون فوائد</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     CATEGORIES
+══════════════════════════════════════════ -->
+<section class="cats-section">
+    <div class="fu-container">
+        <div class="section-header">
+            <span class="fu-eyebrow">✦ استكشف التشكيلة</span>
+            <h2 class="fu-section-title">تسوّق حسب <span>الفئة</span></h2>
+            <div class="fu-divider"></div>
+            <p class="fu-section-sub">أثاث لكل غرفة وكل ذوق — حرفة يدوية تدوم للأجيال</p>
+        </div>
+        <div class="cats-grid">
+            <div class="cat-card reveal">
+                <span class="cat-ico">🛋️</span>
+                <p class="cat-name">غرف المعيشة</p>
+                <span class="cat-count">+420 قطعة</span>
+            </div>
+            <div class="cat-card reveal">
+                <span class="cat-ico">🛏️</span>
+                <p class="cat-name">غرف النوم</p>
+                <span class="cat-count">+380 قطعة</span>
+            </div>
+            <div class="cat-card reveal">
+                <span class="cat-ico">🍽️</span>
+                <p class="cat-name">غرف الطعام</p>
+                <span class="cat-count">+210 قطعة</span>
+            </div>
+            <div class="cat-card reveal">
+                <span class="cat-ico">💼</span>
+                <p class="cat-name">مكاتب وإداري</p>
+                <span class="cat-count">+175 قطعة</span>
+            </div>
+            <div class="cat-card reveal">
+                <span class="cat-ico">🏡</span>
+                <p class="cat-name">حدائق وخارجي</p>
+                <span class="cat-count">+130 قطعة</span>
+            </div>
+            <div class="cat-card reveal">
+                <span class="cat-ico">🪞</span>
+                <p class="cat-name">ديكور وإكسسوار</p>
+                <span class="cat-count">+290 قطعة</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     PRODUCTS
+══════════════════════════════════════════ -->
+<section class="products-section" id="products">
+    <div class="section-header">
+        <span class="fu-eyebrow">⭐ أبرز القطع</span>
+        <h2 class="fu-section-title">مجموعات <span>مميزة</span></h2>
+        <div class="fu-divider"></div>
+        <p class="fu-section-sub">قطع تجمع بين الجمال الكلاسيكي والراحة المعاصرة</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <span class="empty-icon">🛋️</span>
+            <h3 class="empty-title">لا توجد منتجات متاحة الآن!</h3>
+            <p class="empty-text">تابعنا قريباً لتشكيلات جديدة رائعة ✨</p>
+        </div>
+    }
+    else
+    {
+        <div class="products-grid fu-container">
+            @foreach (var product in Model)
+            {
+                <div class="pcard reveal">
+                    <div class="pcard-img">
+                        @if (product.Quantity < 5)
+                        {
+                            <span class="pcard-badge badge-hot">🔥 كمية محدودة</span>
+                        }
+                        else if (product.Price < 1000)
+                        {
+                            <span class="pcard-badge badge-sale">💛 عرض خاص</span>
+                        }
+                        else
+                        {
+                            <span class="pcard-badge badge-new">✨ متوفر</span>
+                        }
+                        <button class="pcard-wish" aria-label="أضف إلى المفضلة">🤍</button>
+                        <img src="~/files/images/@product.Image"
+                             alt="@product.Name"
+                             class="pcard-photo"
+                             loading="lazy" />
+                    </div>
+                    <div class="pcard-body">
+                        <span class="pcard-cat">أثاث فاخر</span>
+                        <p class="pcard-name">@product.Name</p>
+                        <div class="pcard-stars">
+                            <span class="stars-gold">★★★★★</span>
+                            <span class="stars-muted">(4.8)</span>
+                        </div>
+                        <div class="pcard-stock">
+                            <i class="bi bi-box-seam"></i> @product.Quantity في المخزون
+                        </div>
+                        <div class="pcard-price">
+                            <span>من</span>@product.Price.ToString("0.00") ر.س
+                        </div>
+                        <a asp-action="Details"
+                           asp-controller="Home"
+                           asp-route-id="@product.Id"
+                           class="pcard-btn">
+                            <i class="bi bi-eye"></i> عرض التفاصيل
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrapper" style="margin-top:2.5rem">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                LinkToPreviousPageFormat = "→ السابق",
+                LinkToNextPageFormat = "التالي ←",
+                UlElementClasses = new[] { "pagination-custom" },
+                LiElementClasses = new[] { "page-item-custom" }
+                })
+    </div>
+        }
+
+    <div style="text-align:center;margin-top:3rem">
+        <a asp-action="ShowProducts" class="btn-bark">
+            <i class="bi bi-grid-fill"></i> عرض كامل التشكيلة
+        </a>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHOWCASE  — Why Us
+══════════════════════════════════════════ -->
+<section class="showcase-section">
+    <div class="showcase-inner">
+
+        <!-- Images grid -->
+        <div class="sc-imgs">
+            <div class="sc-img sc-img-wide">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80&auto=format&fit=crop"
+                     alt="غرفة معيشة فاخرة" />
+            </div>
+            <div class="sc-img">
+                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400&q=80&auto=format&fit=crop"
+                     alt="غرفة نوم" />
+            </div>
+            <div class="sc-img">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80&auto=format&fit=crop"
+                     alt="مطبخ" />
+            </div>
+        </div>
+
+        <!-- Text -->
+        <div class="showcase-text">
+            <span class="fu-eyebrow">✦ لماذا نخبة الأثاث؟</span>
+            <h2 class="fu-section-title" style="margin-bottom:.75rem">
+                حِرفة تُصنع<br />بعناية <span>فائقة</span>
+            </h2>
+            <p class="fu-section-sub">نختار كل خشبة وكل قماش بعين الخبير — لأن منزلك يستحق الأفضل فقط.</p>
+            <ul class="sc-list">
+                <li><span class="sc-check">✓</span> أخشاب طبيعية مستدامة 100%</li>
+                <li><span class="sc-check">✓</span> نجارون محترفون بخبرة تزيد عن 25 عاماً</li>
+                <li><span class="sc-check">✓</span> أقمشة مستوردة معتمدة بمعايير أوروبية</li>
+                <li><span class="sc-check">✓</span> تصاميم مخصصة حسب طلبك</li>
+                <li><span class="sc-check">✓</span> ضمان شامل 10 سنوات على جميع القطع</li>
+            </ul>
+            <a asp-action="WhoUs" class="btn-gold">
+                <i class="bi bi-arrow-left"></i> اعرف قصتنا
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     ROOMS  — Inspiration Gallery
+══════════════════════════════════════════ -->
+<section class="rooms-section">
+    <div class="section-header">
+        <span class="fu-eyebrow">✦ إلهام لا ينتهي</span>
+        <h2 class="fu-section-title">أثّث <span>غرفتك</span> بأسلوبك</h2>
+        <div class="fu-divider"></div>
+        <p class="fu-section-sub">استلهم من معارضنا الافتراضية واختر الإطلالة التي تناسبك</p>
+    </div>
+
+    <div class="rooms-grid">
+        <div class="room-card room-tall reveal">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80&auto=format&fit=crop"
+                 alt="غرفة نوم كلاسيكية" />
+            <div class="room-overlay"></div>
+            <span class="room-label">🛏️ غرفة النوم الكلاسيكية</span>
+        </div>
+        <div class="room-card room-sq reveal">
+            <img src="https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?w=500&q=80&auto=format&fit=crop"
+                 alt="غرفة معيشة عصرية" />
+            <div class="room-overlay"></div>
+            <span class="room-label">🛋️ المعيشة العصرية</span>
+        </div>
+        <div class="room-card room-sq reveal">
+            <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?w=500&q=80&auto=format&fit=crop"
+                 alt="غرفة طعام" />
+            <div class="room-overlay"></div>
+            <span class="room-label">🍽️ غرفة الطعام</span>
+        </div>
+        <div class="room-card room-sq reveal">
+            <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500&q=80&auto=format&fit=crop"
+                 alt="مكتب فاخر" />
+            <div class="room-overlay"></div>
+            <span class="room-label">💼 المكتب الفاخر</span>
+        </div>
+        <div class="room-card room-sq reveal">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80&auto=format&fit=crop"
+                 alt="جلسة خارجية" />
+            <div class="room-overlay"></div>
+            <span class="room-label">🌿 الجلسة الخارجية</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════ -->
+<section class="testimonials-section">
+    <div class="section-header">
+        <span class="fu-eyebrow">💬 آراء عملائنا</span>
+        <h2 class="fu-section-title">منازل <span>تتحدث</span> عنّا</h2>
+        <div class="fu-divider"></div>
+        <p class="fu-section-sub">أكثر من 15,000 عائلة وثقت ذوقها معنا 💛</p>
+    </div>
+
+    <div class="tests-grid">
+        <div class="tcard reveal">
+            <div class="tcard-head">
+                <div class="tavatar av1">👩</div>
+                <div>
+                    <div class="tname">سارة الأحمدي</div>
+                    <div class="trole">مصمّمة داخلية — الرياض</div>
+                </div>
+            </div>
+            <div class="tstars">★★★★★</div>
+            <p class="ttext">«جودة استثنائية لم أجدها في أي معرض آخر. طاولة الطعام التي اخترتها أصبحت محور اهتمام كل من زار منزلي. أنصح بنخبة الأثاث لكل من يبحث عن الفخامة الحقيقية.»</p>
+            <span class="tproduct">🍽️ طاولة الطعام الملكية</span>
+        </div>
+
+        <div class="tcard reveal">
+            <div class="tcard-head">
+                <div class="tavatar av2">👨</div>
+                <div>
+                    <div class="tname">محمد الزهراني</div>
+                    <div class="trole">رجل أعمال — جدة</div>
+                </div>
+            </div>
+            <div class="tstars">★★★★★</div>
+            <p class="ttext">«أثّثت مكتبي كاملاً من نخبة الأثاث. الاحترافية في التعامل والجودة في التسليم لا تُقارن. المكتب المخصص الذي صنعوه لي تحفة فنية حقيقية.»</p>
+            <span class="tproduct">💼 المكتب التنفيذي الكلاسيكي</span>
+        </div>
+
+        <div class="tcard reveal">
+            <div class="tcard-head">
+                <div class="tavatar av3">👩</div>
+                <div>
+                    <div class="tname">نورة الشمري</div>
+                    <div class="trole">ربّة منزل — الدمام</div>
+                </div>
+            </div>
+            <div class="tstars">★★★★★</div>
+            <p class="ttext">«من التصميم حتى التركيب — تجربة 10/10. طاقم غرفة النوم الذي اخترته حوّل غرفتي إلى فندق خاص! الضمان لمدة 10 سنوات يعطي ثقة لا مثيل لها.»</p>
+            <span class="tproduct">🛏️ طاقم غرفة النوم الملكي</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     NEWSLETTER
+══════════════════════════════════════════ -->
+<section class="newsletter-section">
+    <div class="nl-inner">
+        <span class="nl-badge">🎁 عرض حصري</span>
+        <h2 class="nl-title">احصل على <span>خصم 15%</span><br />على أول طلب!</h2>
+        <p class="nl-sub">اشترك وكن أول من يعلم بالوصولات الجديدة والعروض الموسمية وأسرار التصميم الداخلي 🏡</p>
+        <div class="nl-form">
+            <input type="email" class="nl-input" placeholder="بريدك الإلكتروني..." />
+            <button class="nl-btn">اشترك 🛋️</button>
+        </div>
+        <p class="nl-note">🔒 لا رسائل مزعجة. يمكنك إلغاء الاشتراك في أي وقت.</p>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script>
+        // ── Wishlist toggle ──────────────────────
+        document.querySelectorAll('.pcard-wish').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.textContent = btn.textContent.trim() === '🤍' ? '❤️' : '🤍';
+                btn.style.transform = 'scale(1.5)';
+                setTimeout(() => btn.style.transform = '', 300);
+            });
+        });
+
+        // ── Scroll reveal ────────────────────────
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in-view');
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    </script>
+}
