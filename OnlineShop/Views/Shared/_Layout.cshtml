@@ -531,43 +531,43 @@
     <header>
         <nav class="fu-navbar">
 
-            <!-- Logo -->
-            <a asp-controller="Home" asp-action="Index" class="fu-logo">
-                <div class="fu-logo-icon">🛋️</div>
-                <span class="fu-logo-text">نخبة <span>الأثاث</span></span>
-            </a>
+            @if (role.Count == 0)
+            {
+                <!-- Desktop links -->
+                <ul class="fu-nav-links" id="fuNavLinks">
+                    <li>
+                        <a asp-controller="Home" asp-action="Index">
+                            <i class="bi bi-house-door"></i> الرئيسية
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="WhoUs">
+                            <i class="bi bi-people"></i> من نحن
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="ShowProducts">
+                            <i class="bi bi-grid"></i> المجموعات
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Compailant">
+                            <i class="bi bi-chat-dots"></i> تواصل معنا
+                        </a>
+                    </li>
+                </ul>
+            }
 
-            <!-- Desktop links -->
-            <ul class="fu-nav-links" id="fuNavLinks">
-                <li>
-                    <a asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-house-door"></i> الرئيسية
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Home" asp-action="WhoUs">
-                        <i class="bi bi-people"></i> من نحن
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Home" asp-action="ShowProducts">
-                        <i class="bi bi-grid"></i> المجموعات
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Home" asp-action="Compailant">
-                        <i class="bi bi-chat-dots"></i> تواصل معنا
-                    </a>
-                </li>
-
-                @if (role.Count() > 0 && role[0] == "Admin")
-                {
+            @if (role.Count > 0 && role[0] == "Admin")
+            {
+                <ul class="fu-nav-links" id="fuNavLinks">
                     <li class="fu-drop-wrap" id="adminDropWrap">
                         <button class="fu-drop-toggle" onclick="fuToggleDrop('adminDropWrap', event)">
                             <i class="bi bi-gear-fill"></i>
                             الإدارة
                             <i class="bi bi-chevron-down fu-chevron"></i>
                         </button>
+
                         <ul class="fu-drop-menu">
                             <li>
                                 <a asp-controller="ProductType" asp-action="Index">
@@ -597,13 +597,13 @@
                             </li>
                         </ul>
                     </li>
-                }
-            </ul>
+                </ul>
+            }
 
             <!-- Actions -->
             <div class="fu-nav-actions">
-
-                <!-- Cart -->
+                @if(role.Count==0)
+                {
                 <a asp-controller="Home" asp-action="Cart" class="fu-cart-btn" aria-label="سلة التسوق">
                     <i class="bi bi-bag"></i>
                     @if (count > 0)
@@ -611,10 +611,9 @@
                         <span class="fu-cart-badge">@count</span>
                     }
                 </a>
-
+                }
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
-                    <!-- User dropdown -->
                     <div class="fu-drop-wrap" id="userDropWrap">
                         <button class="fu-user-btn" onclick="fuToggleDrop('userDropWrap', event)">
                             <div class="fu-avatar">@Name.Substring(0, 1).ToUpper()</div>
@@ -640,16 +639,28 @@
                     </a>
                 }
 
-                <!-- Mobile toggle -->
                 <button class="fu-mobile-toggle" onclick="fuToggleMobileNav()" aria-label="القائمة">
                     <i class="bi bi-list"></i>
                 </button>
+
+                <a asp-controller="Home" asp-action="Index" class="fu-logo">
+                    <div class="fu-logo-icon">🛋️</div>
+                    <span class="fu-logo-text">نخبة <span>الأثاث</span></span>
+                </a>
+
             </div>
         </nav>
     </header>
 
     <!-- ══════════════ MAIN ══════════════ -->
     <main role="main">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["Success"]
+            </div>
+        }
+
         @RenderBody()
     </main>
 

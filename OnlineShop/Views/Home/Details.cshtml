@@ -12,7 +12,6 @@
     var productInCart = products?.FirstOrDefault(e => e.Id == Model.Id);
 }
 
-
 <!-- ══ BREADCRUMB ══ -->
 <nav class="pd-crumb" dir="rtl">
     <a asp-action="Index" asp-controller="Home"><i class="bi bi-house-fill"></i> الرئيسية</a>
@@ -50,7 +49,7 @@
                     @if (Model.Quantity > 0 && Model.Quantity <= 10)
                     {
                         <span class="pd-badge badge-low">
-                            <i class="bi bi-fire"></i> كمية محدودة
+                            <i class="bi bi-clock-fill"></i> كمية محدودة
                         </span>
                     }
                 </div>
@@ -63,7 +62,6 @@
 
                 <!-- Main image -->
                 <div class="pd-img-wrap">
-                    <div class="pd-img-glow"></div>
                     <img src="~/files/images/@Model.Image"
                          alt="@Model.Name"
                          class="pd-main-img"
@@ -97,8 +95,11 @@
                     </div>
                 </div>
 
-                <!-- Fun sticker -->
-                <div class="pd-fun-sticker">🌟 اختيار الأطفال!</div>
+                <!-- Craftsmanship tag -->
+                <div class="pd-craft-tag">
+                    <i class="bi bi-award-fill"></i> مصنوع يدوياً بعناية فائقة
+                </div>
+
             </div>
 
             <!-- ══ RIGHT: INFO ══ -->
@@ -107,11 +108,14 @@
                 <!-- Type pill -->
                 <div class="pd-type-pill">
                     <i class="bi bi-grid-3x3-gap-fill"></i>
-                    @(Model.ProductType?.Name ?? "منتج")
+                    @(Model.ProductType?.Name ?? "أثاث")
                 </div>
 
                 <!-- Name -->
                 <h1 class="pd-name">@Model.Name</h1>
+
+                <!-- Gold line -->
+                <div class="pd-gold-line"></div>
 
                 <!-- Stars -->
                 <div class="pd-stars">
@@ -120,35 +124,39 @@
                     <i class="bi bi-star-fill star-icon"></i>
                     <i class="bi bi-star-fill star-icon"></i>
                     <i class="bi bi-star-half star-icon"></i>
-                    <span class="star-score">٤.٥</span>
+                    <span class="star-score">4.8</span>
                     <div class="sep"></div>
-                    <span>١٢٨ تقييم</span>
+                    <span>128 تقييم</span>
                     <div class="sep"></div>
-                    <span class="satisfaction">٩٦٪ راضون 😊</span>
+                    <span class="satisfaction">96% راضون</span>
                 </div>
 
                 <!-- Price block -->
                 <div class="pd-price-block">
-                    <div class="pd-price-main">
-                        <span class="price-currency">ج.م</span>@Model.Price.ToString("0.00")
+                    <div>
+                        <p class="pd-price-label">السعر</p>
+                        <div class="pd-price-main">
+                            @Model.Price.ToString("0.00")
+                            <span class="price-currency">ر.س</span>
+                        </div>
                     </div>
                     <div class="pd-stock-wrap">
                         @if (Model.Quantity > 10)
                         {
                             <div class="pd-stock-tag stock-good">
-                                <i class="bi bi-box-seam-fill"></i> @Model.Quantity قطعة في المخزون
+                                <i class="bi bi-check2-circle"></i> @Model.Quantity قطعة متوفرة
                             </div>
                         }
                         else if (Model.Quantity > 0)
                         {
                             <div class="pd-stock-tag stock-low">
-                                <i class="bi bi-exclamation-triangle-fill"></i> @Model.Quantity متبقية فقط!
+                                <i class="bi bi-exclamation-circle"></i> @Model.Quantity متبقية فقط
                             </div>
                         }
                         else
                         {
                             <div class="pd-stock-tag stock-none">
-                                <i class="bi bi-x-circle-fill"></i> نفد من المخزون
+                                <i class="bi bi-x-circle"></i> نفد من المخزون
                             </div>
                         }
                     </div>
@@ -158,8 +166,8 @@
                 @if (!string.IsNullOrEmpty(Model.Description))
                 {
                     <div class="pd-desc">
-                        <i class="bi bi-quote pd-desc-icon"></i>
-                        @Model.Description
+                        <div class="pd-desc-accent"></div>
+                        <p>@Model.Description</p>
                     </div>
                 }
 
@@ -168,7 +176,7 @@
                     @if (!string.IsNullOrEmpty(Model.ProductColor))
                     {
                         <div class="pd-info-row">
-                            <div class="pd-info-row-icon icon-yellow"><i class="bi bi-palette-fill"></i></div>
+                            <div class="pd-info-row-icon icon-gold"><i class="bi bi-palette-fill"></i></div>
                             <div class="pd-info-row-body">
                                 <div class="pd-info-row-label">اللون</div>
                                 <div class="pd-info-row-val">
@@ -179,14 +187,14 @@
                         </div>
                     }
                     <div class="pd-info-row">
-                        <div class="pd-info-row-icon icon-pink"><i class="bi bi-tag-fill"></i></div>
+                        <div class="pd-info-row-icon icon-brown"><i class="bi bi-tag-fill"></i></div>
                         <div class="pd-info-row-body">
                             <div class="pd-info-row-label">نوع المنتج</div>
                             <div class="pd-info-row-val">@(Model.ProductType?.Name ?? "—")</div>
                         </div>
                     </div>
                     <div class="pd-info-row">
-                        <div class="pd-info-row-icon icon-blue"><i class="bi bi-award-fill"></i></div>
+                        <div class="pd-info-row-icon icon-charcoal"><i class="bi bi-award-fill"></i></div>
                         <div class="pd-info-row-body">
                             <div class="pd-info-row-label">العلامة التجارية</div>
                             <div class="pd-info-row-val">@(Model.ProductBrand?.Name ?? "—")</div>
@@ -196,7 +204,7 @@
 
                 <!-- Quantity picker -->
                 <div class="pd-qty-row">
-                    <span class="pd-qty-label">الكمية المطلوبة:</span>
+                    <span class="pd-qty-label">الكمية المطلوبة</span>
                     <div class="pd-qty-picker">
                         <button type="button" class="qty-btn"
                                 onclick="var i=document.getElementById('qty');if(+i.value>1)i.value=+i.value-1">
@@ -214,7 +222,7 @@
 
                 <!-- Login note -->
                 <div class="pd-login-note">
-                    <i class="bi bi-info-circle-fill"></i>
+                    <i class="bi bi-info-circle"></i>
                     يجب عليك تسجيل الدخول أولاً قبل الإضافة إلى السلة
                 </div>
 
@@ -224,13 +232,13 @@
                     {
                         <button type="submit" class="pd-btn pd-btn-remove"
                                 asp-action="Remove" asp-route-id="@Model.Id">
-                            <i class="bi bi-cart-x-fill"></i> إزالة من السلة
+                            <i class="bi bi-cart-x"></i> إزالة من السلة
                         </button>
                     }
                     else
                     {
                         <button type="submit" class="pd-btn pd-btn-add">
-                            <i class="bi bi-cart-plus-fill"></i> أضف إلى السلة
+                            <i class="bi bi-cart-plus"></i> أضف إلى السلة
                         </button>
                     }
                     <a asp-action="Index" class="pd-btn pd-btn-back">
@@ -241,24 +249,24 @@
                 <!-- Guarantees -->
                 <div class="pd-guarantees">
                     <div class="pd-guarantee">
-                        <div class="guarantee-icon g-orange">🚚</div>
-                        <p class="guarantee-title">شحن سريع</p>
-                        <span class="guarantee-sub">٢-٥ أيام عمل</span>
+                        <div class="guarantee-icon"><i class="bi bi-truck"></i></div>
+                        <p class="guarantee-title">شحن مجاني</p>
+                        <span class="guarantee-sub">داخل المملكة</span>
                     </div>
                     <div class="pd-guarantee">
-                        <div class="guarantee-icon g-pink">🛡️</div>
-                        <p class="guarantee-title">ضمان سنة</p>
+                        <div class="guarantee-icon"><i class="bi bi-shield-check"></i></div>
+                        <p class="guarantee-title">ضمان 5 سنوات</p>
                         <span class="guarantee-sub">على جميع المنتجات</span>
                     </div>
                     <div class="pd-guarantee">
-                        <div class="guarantee-icon g-green">↩️</div>
+                        <div class="guarantee-icon"><i class="bi bi-arrow-counterclockwise"></i></div>
                         <p class="guarantee-title">إرجاع مجاني</p>
-                        <span class="guarantee-sub">خلال ٣٠ يوماً</span>
+                        <span class="guarantee-sub">خلال 30 يوماً</span>
                     </div>
                     <div class="pd-guarantee">
-                        <div class="guarantee-icon g-blue">🎁</div>
-                        <p class="guarantee-title">تغليف هدايا</p>
-                        <span class="guarantee-sub">مجاناً مع كل طلب</span>
+                        <div class="guarantee-icon"><i class="bi bi-tools"></i></div>
+                        <p class="guarantee-title">تركيب احترافي</p>
+                        <span class="guarantee-sub">فريق متخصص</span>
                     </div>
                 </div>
 
@@ -268,9 +276,22 @@
 </div>
 
 <style>
-    @@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap');
+    @@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@@0,400;0,600;0,700;1,400;1,600&family=Cairo:wght@@300;400;500;600;700&display=swap');
 
-   
+    :root {
+        --cream: #F8F5F0;
+        --warm-white: #FDFBF8;
+        --charcoal: #2C2826;
+        --brown: #6B4F3A;
+        --gold: #C9A96E;
+        --gold-light: #E8D5B0;
+        --text: #2C2826;
+        --muted: #9E8E83;
+        --border: rgba(44,40,38,0.1);
+        --serif: 'Playfair Display', serif;
+        --sans: 'Cairo', sans-serif;
+    }
+
     *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
@@ -278,215 +299,85 @@
     }
 
     body {
-        background: var(--light-bg);
-        font-family: 'Cairo', 'Tajawal', sans-serif;
+        background: var(--warm-white);
+        font-family: var(--sans);
         color: var(--text);
         direction: rtl;
         overflow-x: hidden;
     }
 
-    /* ── CONFETTI ── */
-    .confetti-bg {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-    }
-
-        .confetti-bg span {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: floatUp linear infinite;
-        }
-
-            .confetti-bg span:nth-child(1) {
-                left: 5%;
-                background: var(--pink);
-                width: 16px;
-                height: 16px;
-                animation-duration: 13s;
-                animation-delay: 0s;
-            }
-
-            .confetti-bg span:nth-child(2) {
-                left: 15%;
-                background: var(--yellow);
-                width: 10px;
-                height: 10px;
-                animation-duration: 10s;
-                animation-delay: 2s;
-            }
-
-            .confetti-bg span:nth-child(3) {
-                left: 28%;
-                background: var(--blue);
-                width: 13px;
-                height: 13px;
-                animation-duration: 14s;
-                animation-delay: 4s;
-            }
-
-            .confetti-bg span:nth-child(4) {
-                left: 42%;
-                background: var(--orange);
-                width: 8px;
-                height: 8px;
-                animation-duration: 11s;
-                animation-delay: 1s;
-            }
-
-            .confetti-bg span:nth-child(5) {
-                left: 58%;
-                background: var(--purple);
-                width: 15px;
-                height: 15px;
-                animation-duration: 12s;
-                animation-delay: 3s;
-            }
-
-            .confetti-bg span:nth-child(6) {
-                left: 70%;
-                background: var(--green);
-                width: 11px;
-                height: 11px;
-                animation-duration: 9s;
-                animation-delay: 5s;
-            }
-
-            .confetti-bg span:nth-child(7) {
-                left: 80%;
-                background: var(--sky);
-                width: 9px;
-                height: 9px;
-                animation-duration: 8s;
-                animation-delay: 1.5s;
-            }
-
-            .confetti-bg span:nth-child(8) {
-                left: 90%;
-                background: var(--pink);
-                width: 14px;
-                height: 14px;
-                animation-duration: 15s;
-                animation-delay: 6s;
-            }
-
-            .confetti-bg span:nth-child(9) {
-                left: 35%;
-                background: var(--yellow);
-                width: 18px;
-                height: 18px;
-                animation-duration: 11s;
-                animation-delay: 7s;
-            }
-
-            .confetti-bg span:nth-child(10) {
-                left: 75%;
-                background: var(--orange);
-                width: 8px;
-                height: 8px;
-                animation-duration: 13s;
-                animation-delay: 0.5s;
-            }
-
-    @@keyframes floatUp {
-        0% {
-            transform: translateY(110vh) rotate(0deg);
-            opacity: 0.15;
-        }
-
-        100% {
-            transform: translateY(-10vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
-
-    /* ── BREADCRUMB ── */
+    /* ══ BREADCRUMB ══ */
     .pd-crumb {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 1.25rem 2.5rem;
-        font-size: 0.87rem;
-        font-weight: 700;
-        position: relative;
-        z-index: 2;
+        padding: 1.5rem 3rem;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
         flex-wrap: wrap;
+        border-bottom: 1px solid var(--border);
+        background: var(--warm-white);
     }
 
         .pd-crumb a {
             color: var(--muted);
             text-decoration: none;
-            transition: color 0.2s;
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            transition: color 0.2s;
         }
 
             .pd-crumb a:hover {
-                color: var(--orange);
+                color: var(--gold);
             }
 
     .crumb-sep {
-        color: #ccc;
-        font-size: 0.75rem;
+        color: var(--border);
+        font-size: 0.7rem;
     }
 
     .crumb-current {
-        color: var(--orange);
-        font-weight: 800;
+        color: var(--brown);
+        font-weight: 700;
     }
 
-    /* ── VALIDATION ── */
-    .pd-validation {
-        background: #fef2f2;
-        border: 2px solid #fecaca;
-        border-radius: 16px;
-        padding: 1rem 1.5rem;
-        margin: 0 2.5rem 1rem;
-        color: var(--danger);
-    }
-
-    /* ── PAGE WRAPPER ── */
+    /* ══ PAGE WRAPPER ══ */
     .pd-page {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 2rem 5rem;
-        position: relative;
-        z-index: 1;
+        padding: 3rem 2rem 6rem;
     }
 
-    /* ── MAIN GRID ── */
+    /* ══ MAIN GRID ══ */
     .pd-main {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 3rem;
+        gap: 4rem;
         align-items: start;
     }
 
-    /* ══════════════════════════
+    /* ══════════════════════
            LEFT: VISUAL PANEL
-        ══════════════════════════ */
+        ══════════════════════ */
     .pd-visual {
         position: sticky;
-        top: 1.5rem;
-        background: white;
-        border-radius: 28px;
+        top: 2rem;
+        background: var(--cream);
         padding: 2rem;
-        box-shadow: 0 8px 40px rgba(255,107,53,0.1);
-        border: 2px solid rgba(255,217,61,0.3);
         display: flex;
         flex-direction: column;
         gap: 1.25rem;
-        animation: slideInLeft 0.6s var(--bounce) both;
+        animation: fadeSlideLeft 0.55s ease both;
+        border: 1px solid rgba(201,169,110,0.2);
     }
 
-    @@keyframes slideInLeft {
+    @@keyframes fadeSlideLeft {
         from {
             opacity: 0;
-            transform: translateX(-30px);
+            transform: translateX(-24px);
         }
 
         to {
@@ -506,90 +397,73 @@
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
-        padding: 0.35rem 0.9rem;
-        border-radius: 50px;
-        font-size: 0.78rem;
-        font-weight: 800;
+        padding: 0.3rem 0.85rem;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     .badge-in {
-        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-        color: #065f46;
+        background: #D1FAE5;
+        color: #065F46;
     }
 
     .badge-out {
-        background: linear-gradient(135deg, #fee2e2, #fecaca);
-        color: #991b1b;
+        background: #FEE2E2;
+        color: #991B1B;
     }
 
     .badge-low {
-        background: linear-gradient(135deg, #fef3c7, #fde68a);
-        color: #92400e;
+        background: var(--gold-light);
+        color: #7A5A20;
     }
 
-    /* Wishlist button */
+    /* Wishlist */
     .pd-wish {
         position: absolute;
         top: 1.5rem;
         left: 1.5rem;
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         background: white;
-        border: 2px solid #fecdd3;
-        border-radius: 50%;
+        border: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 1.1rem;
-        color: #fda4af;
-        transition: transform 0.25s var(--bounce), color 0.2s, border-color 0.2s, box-shadow 0.2s;
-        box-shadow: 0 4px 12px rgba(255,77,141,0.15);
+        font-size: 1rem;
+        color: var(--muted);
+        transition: all 0.2s;
+        z-index: 2;
     }
 
-        .pd-wish:hover,
-        .pd-wish.wished {
-            color: var(--pink);
-            border-color: var(--pink);
-            transform: scale(1.25);
-            box-shadow: 0 6px 20px rgba(255,77,141,0.35);
+        .pd-wish:hover, .pd-wish.wished {
+            color: #C9A96E;
+            border-color: var(--gold);
+            background: var(--cream);
         }
 
-    /* Image wrap */
+    /* Image */
     .pd-img-wrap {
-        position: relative;
-        background: linear-gradient(135deg, #fff8f0, #fff0e6);
-        border-radius: 20px;
-        overflow: hidden;
+        background: white;
+        border: 1px solid var(--border);
         aspect-ratio: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .pd-img-glow {
-        position: absolute;
-        width: 60%;
-        height: 60%;
-        background: radial-gradient(circle, rgba(255,217,61,0.35) 0%, transparent 70%);
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
+        overflow: hidden;
     }
 
     .pd-main-img {
-        width: 85%;
-        height: 85%;
+        width: 80%;
+        height: 80%;
         object-fit: contain;
-        position: relative;
-        z-index: 1;
-        transition: transform 0.4s var(--bounce);
+        transition: transform 0.5s ease;
     }
 
     .pd-img-wrap:hover .pd-main-img {
-        transform: scale(1.08) rotate(2deg);
+        transform: scale(1.06);
     }
 
     /* Color chip */
@@ -597,21 +471,21 @@
         display: flex;
         align-items: center;
         gap: 0.6rem;
-        background: #f9fafb;
-        border: 2px solid #e5e7eb;
-        border-radius: 50px;
+        background: white;
+        border: 1px solid var(--border);
         padding: 0.4rem 1rem;
-        font-size: 0.82rem;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
         width: fit-content;
     }
 
     .color-circle {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
         border: 2px solid white;
-        box-shadow: 0 0 0 1.5px rgba(0,0,0,0.12);
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
         flex-shrink: 0;
     }
 
@@ -622,14 +496,13 @@
     }
 
     .pd-thumb {
-        width: 70px;
-        height: 70px;
-        border-radius: 14px;
+        width: 68px;
+        height: 68px;
         overflow: hidden;
-        border: 2.5px solid transparent;
+        border: 1px solid var(--border);
         cursor: pointer;
-        transition: border-color 0.2s, transform 0.2s var(--bounce);
-        background: #f3f4f6;
+        transition: border-color 0.2s, transform 0.2s ease;
+        background: white;
     }
 
         .pd-thumb img {
@@ -639,52 +512,43 @@
         }
 
         .pd-thumb.active {
-            border-color: var(--orange);
+            border-color: var(--gold);
+            border-width: 2px;
         }
 
         .pd-thumb:hover {
-            border-color: var(--yellow);
-            transform: translateY(-3px);
+            border-color: var(--gold);
+            transform: translateY(-2px);
         }
 
-    /* Fun sticker */
-    .pd-fun-sticker {
-        display: inline-block;
-        align-self: center;
-        background: linear-gradient(135deg, var(--yellow), #f59e0b);
-        color: #92400e;
-        font-weight: 900;
-        font-size: 0.82rem;
-        padding: 0.4rem 1.2rem;
-        border-radius: 50px;
-        box-shadow: 0 4px 14px rgba(255,193,7,0.4);
-        animation: wobble 3s ease-in-out infinite;
+    /* Craft tag */
+    .pd-craft-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        text-transform: uppercase;
+        font-weight: 600;
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
     }
 
-    @@keyframes wobble {
-        0%, 100% {
-            transform: rotate(-2deg);
-        }
-
-        50% {
-            transform: rotate(2deg);
-        }
-    }
-
-    /* ══════════════════════════
+    /* ══════════════════════
            RIGHT: INFO PANEL
-        ══════════════════════════ */
+        ══════════════════════ */
     .pd-info {
         display: flex;
         flex-direction: column;
-        gap: 1.4rem;
-        animation: slideInRight 0.6s var(--bounce) 0.1s both;
+        gap: 1.5rem;
+        animation: fadeSlideRight 0.55s ease 0.1s both;
     }
 
-    @@keyframes slideInRight {
+    @@keyframes fadeSlideRight {
         from {
             opacity: 0;
-            transform: translateX(30px);
+            transform: translateX(24px);
         }
 
         to {
@@ -698,22 +562,30 @@
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-        color: var(--purple);
-        border: 1.5px solid rgba(168,85,247,0.2);
-        padding: 0.4rem 1rem;
-        border-radius: 50px;
-        font-size: 0.82rem;
-        font-weight: 800;
+        background: var(--gold-light);
+        color: var(--brown);
+        padding: 0.35rem 1rem;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
         width: fit-content;
     }
 
-    /* Product name */
+    /* Name */
     .pd-name {
-        font-family: 'Fredoka One', 'Cairo', cursive;
-        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        font-weight: 600;
+        color: var(--charcoal);
         line-height: 1.2;
-        color: var(--text);
+    }
+
+    /* Gold divider */
+    .pd-gold-line {
+        width: 48px;
+        height: 2px;
+        background: var(--gold);
     }
 
     /* Stars */
@@ -722,40 +594,40 @@
         align-items: center;
         gap: 0.4rem;
         flex-wrap: wrap;
-        font-size: 0.9rem;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         color: var(--muted);
     }
 
     .star-icon {
-        color: var(--yellow);
-        font-size: 1rem;
+        color: var(--gold);
+        font-size: 0.9rem;
     }
 
     .star-score {
-        color: var(--text);
-        font-weight: 800;
-        margin-right: 0.2rem;
+        color: var(--charcoal);
+        font-weight: 700;
+        margin-right: 0.1rem;
     }
 
     .satisfaction {
-        color: var(--success);
-        font-weight: 700;
+        color: #3D7A4A;
+        font-weight: 600;
     }
 
     .sep {
-        width: 4px;
-        height: 4px;
-        background: #d1d5db;
+        width: 3px;
+        height: 3px;
+        background: var(--border);
         border-radius: 50%;
     }
 
     /* Price block */
     .pd-price-block {
-        background: linear-gradient(135deg, #fff8f0, #fff3e0);
-        border: 2px solid rgba(255,107,53,0.15);
-        border-radius: 20px;
-        padding: 1.25rem 1.5rem;
+        background: white;
+        border: 1px solid rgba(201,169,110,0.3);
+        border-right: 3px solid var(--gold);
+        padding: 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -763,22 +635,32 @@
         flex-wrap: wrap;
     }
 
+    .pd-price-label {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
     .pd-price-main {
-        font-family: 'Fredoka One', 'Cairo', cursive;
+        font-family: var(--serif);
         font-size: 2.8rem;
-        color: var(--orange);
+        font-weight: 600;
+        color: var(--brown);
         line-height: 1;
         display: flex;
-        align-items: flex-start;
-        gap: 0.3rem;
+        align-items: flex-end;
+        gap: 0.4rem;
     }
 
     .price-currency {
-        font-family: 'Cairo', sans-serif;
-        font-size: 1rem;
-        font-weight: 800;
-        margin-top: 0.4rem;
-        color: var(--orange);
+        font-family: var(--sans);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 0.4rem;
     }
 
     .pd-stock-wrap {
@@ -792,52 +674,55 @@
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        padding: 0.4rem 0.9rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 800;
+        padding: 0.35rem 0.85rem;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
     }
 
     .stock-good {
-        background: #d1fae5;
-        color: #065f46;
+        background: #D1FAE5;
+        color: #065F46;
     }
 
     .stock-low {
-        background: #fef3c7;
-        color: #92400e;
+        background: var(--gold-light);
+        color: #7A5A20;
     }
 
     .stock-none {
-        background: #fee2e2;
-        color: #991b1b;
+        background: #FEE2E2;
+        color: #991B1B;
     }
 
     /* Description */
     .pd-desc {
+        display: flex;
+        gap: 1rem;
         background: white;
-        border: 2px solid rgba(108,99,255,0.1);
-        border-right: 4px solid var(--purple);
-        border-radius: 0 16px 16px 0;
-        padding: 1rem 1.25rem;
-        font-size: 0.92rem;
-        color: var(--muted);
-        font-weight: 600;
-        line-height: 1.75;
-        position: relative;
+        border: 1px solid var(--border);
+        padding: 1.25rem;
     }
 
-    .pd-desc-icon {
-        color: var(--purple);
-        margin-left: 0.3rem;
-        font-size: 1.1rem;
+    .pd-desc-accent {
+        width: 3px;
+        background: var(--gold);
+        flex-shrink: 0;
+    }
+
+    .pd-desc p {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 400;
+        line-height: 1.9;
     }
 
     /* Info rows */
     .pd-info-rows {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0.6rem;
     }
 
     .pd-info-row {
@@ -845,41 +730,39 @@
         align-items: center;
         gap: 0.85rem;
         background: white;
-        border: 2px solid #f3f4f6;
-        border-radius: 16px;
+        border: 1px solid var(--border);
         padding: 0.85rem 1rem;
-        transition: border-color 0.2s, transform 0.2s var(--bounce);
+        transition: border-color 0.2s, transform 0.2s ease;
     }
 
         .pd-info-row:hover {
-            border-color: var(--yellow);
-            transform: translateX(-4px);
+            border-color: var(--gold);
+            transform: translateX(-3px);
         }
 
     .pd-info-row-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
+        font-size: 1rem;
         flex-shrink: 0;
     }
 
-    .icon-yellow {
-        background: linear-gradient(135deg, #fde68a, #fbbf24);
-        color: #92400e;
+    .icon-gold {
+        background: var(--gold-light);
+        color: var(--brown);
     }
 
-    .icon-pink {
-        background: linear-gradient(135deg, #fecdd3, #fb7185);
-        color: #9f1239;
+    .icon-brown {
+        background: rgba(107,79,58,0.1);
+        color: var(--brown);
     }
 
-    .icon-blue {
-        background: linear-gradient(135deg, #bfdbfe, #60a5fa);
-        color: #1e40af;
+    .icon-charcoal {
+        background: rgba(44,40,38,0.06);
+        color: var(--charcoal);
     }
 
     .pd-info-row-body {
@@ -889,15 +772,17 @@
     }
 
     .pd-info-row-label {
-        font-size: 0.75rem;
+        font-size: 10px;
         color: var(--muted);
-        font-weight: 700;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     .pd-info-row-val {
-        font-size: 0.92rem;
-        font-weight: 800;
-        color: var(--text);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--charcoal);
         display: flex;
         align-items: center;
         gap: 0.4rem;
@@ -905,11 +790,11 @@
 
     .inline-color-dot {
         display: inline-block;
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
         border-radius: 50%;
         border: 2px solid white;
-        box-shadow: 0 0 0 1.5px rgba(0,0,0,0.12);
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
         flex-shrink: 0;
     }
 
@@ -922,18 +807,17 @@
     }
 
     .pd-qty-label {
-        font-weight: 800;
-        font-size: 0.92rem;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--charcoal);
     }
 
     .pd-qty-picker {
         display: flex;
         align-items: center;
-        border: 2.5px solid var(--yellow);
-        border-radius: 50px;
-        overflow: hidden;
+        border: 1px solid var(--charcoal);
         background: white;
-        box-shadow: 0 4px 14px rgba(255,217,61,0.2);
     }
 
     .qty-btn {
@@ -945,26 +829,28 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 900;
-        color: var(--orange);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--charcoal);
         transition: background 0.2s;
     }
 
         .qty-btn:hover {
-            background: #fff3e0;
+            background: var(--cream);
         }
 
     .qty-input {
         width: 52px;
         height: 40px;
         border: none;
+        border-right: 1px solid var(--border);
+        border-left: 1px solid var(--border);
         outline: none;
         text-align: center;
-        font-family: 'Cairo', sans-serif;
-        font-weight: 800;
-        font-size: 1rem;
-        color: var(--text);
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--charcoal);
         background: white;
         -moz-appearance: textfield;
     }
@@ -975,13 +861,13 @@
         }
 
     .pd-avail-note {
-        font-size: 0.82rem;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 600;
         color: var(--muted);
     }
 
         .pd-avail-note strong {
-            color: var(--orange);
+            color: var(--brown);
         }
 
     /* Login note */
@@ -989,19 +875,19 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        border: 1.5px solid #bfdbfe;
-        border-radius: 12px;
-        padding: 0.7rem 1rem;
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: #1e40af;
+        background: rgba(201,169,110,0.08);
+        border: 1px solid rgba(201,169,110,0.25);
+        padding: 0.75rem 1rem;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--brown);
+        letter-spacing: 0.02em;
     }
 
     /* CTA buttons */
     .pd-cta {
         display: flex;
-        gap: 0.85rem;
+        gap: 0.75rem;
         flex-wrap: wrap;
     }
 
@@ -1010,120 +896,103 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        padding: 0.9rem 1.75rem;
-        border-radius: 50px;
-        font-family: 'Cairo', sans-serif;
-        font-weight: 800;
-        font-size: 1rem;
+        padding: 0.9rem 2rem;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         cursor: pointer;
         text-decoration: none;
         border: none;
-        transition: transform 0.25s var(--bounce), box-shadow 0.25s;
+        transition: background 0.2s, transform 0.2s ease;
         white-space: nowrap;
     }
 
     .pd-btn-add {
-        background: linear-gradient(135deg, var(--orange), var(--pink));
+        background: var(--charcoal);
         color: white;
-        box-shadow: 0 8px 24px rgba(255,107,53,0.4);
         flex: 1;
     }
 
         .pd-btn-add:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 36px rgba(255,107,53,0.5);
+            background: var(--brown);
+            transform: translateY(-2px);
             color: white;
         }
 
     .pd-btn-remove {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
+        background: #991B1B;
         color: white;
-        box-shadow: 0 6px 20px rgba(239,68,68,0.35);
         flex: 1;
     }
 
         .pd-btn-remove:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(239,68,68,0.45);
+            background: #7F1D1D;
+            transform: translateY(-2px);
             color: white;
         }
 
     .pd-btn-back {
-        background: white;
-        color: var(--orange);
-        border: 2.5px solid var(--orange);
+        background: transparent;
+        color: var(--charcoal);
+        border: 1px solid var(--charcoal);
     }
 
         .pd-btn-back:hover {
-            background: var(--orange);
+            background: var(--charcoal);
             color: white;
-            transform: translateY(-4px);
+            transform: translateY(-2px);
         }
 
     /* Guarantees */
     .pd-guarantees {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 0.75rem;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
         margin-top: 0.5rem;
     }
 
     .pd-guarantee {
         background: white;
-        border: 2px solid #f3f4f6;
-        border-radius: 18px;
-        padding: 1rem 0.75rem;
+        padding: 1.25rem 0.75rem;
         text-align: center;
-        transition: transform 0.25s var(--bounce), border-color 0.2s;
-        cursor: default;
+        transition: background 0.2s;
     }
 
         .pd-guarantee:hover {
-            transform: translateY(-5px);
-            border-color: var(--yellow);
+            background: var(--cream);
         }
 
     .guarantee-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 14px;
+        width: 40px;
+        height: 40px;
+        background: var(--cream);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
-        margin: 0 auto 0.6rem;
-    }
-
-    .g-orange {
-        background: linear-gradient(135deg, #fed7aa, #fb923c);
-    }
-
-    .g-pink {
-        background: linear-gradient(135deg, #fecdd3, #f472b6);
-    }
-
-    .g-green {
-        background: linear-gradient(135deg, #bbf7d0, #4ade80);
-    }
-
-    .g-blue {
-        background: linear-gradient(135deg, #bfdbfe, #60a5fa);
+        font-size: 1.1rem;
+        color: var(--gold);
+        margin: 0 auto 0.65rem;
+        border: 1px solid rgba(201,169,110,0.2);
     }
 
     .guarantee-title {
-        font-weight: 800;
-        font-size: 0.82rem;
-        color: var(--text);
+        font-weight: 600;
+        font-size: 12px;
+        color: var(--charcoal);
         margin-bottom: 0.2rem;
     }
 
     .guarantee-sub {
-        font-size: 0.72rem;
+        font-size: 11px;
         color: var(--muted);
-        font-weight: 600;
+        font-weight: 400;
     }
 
-    /* ── RESPONSIVE ── */
+    /* ══ RESPONSIVE ══ */
     @@media (max-width: 900px) {
         .pd-main {
             grid-template-columns: 1fr;
@@ -1137,27 +1006,23 @@
         .pd-guarantees {
             grid-template-columns: repeat(2, 1fr);
         }
+
+        .pd-crumb {
+            padding: 1rem 1.5rem;
+        }
     }
 
     @@media (max-width: 576px) {
         .pd-page {
-            padding: 0 1rem 4rem;
-        }
-
-        .pd-crumb {
-            padding: 1rem 1rem;
+            padding: 1.5rem 1rem 4rem;
         }
 
         .pd-name {
-            font-size: 1.75rem;
+            font-size: 1.8rem;
         }
 
         .pd-price-main {
             font-size: 2.2rem;
-        }
-
-        .pd-guarantees {
-            grid-template-columns: repeat(2, 1fr);
         }
 
         .pd-cta {

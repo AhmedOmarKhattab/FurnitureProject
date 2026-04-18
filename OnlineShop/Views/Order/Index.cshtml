@@ -16,6 +16,8 @@
             <th>تاريخ الطلب</th>
             <th>الحالة</th>
             <th></th>
+            <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -36,6 +38,13 @@
                             <i class="fas fa-list"></i>
                         </a>
                     </td>
+                    <td>
+                        <a asp-action="ChangeStauts" asp-controller="Order" class="btn btn-success" asp-route-id="@o.Id">
+                            <i class="fas fa-sync-alt"></i>
+
+                        </a>
+                    </td>
+
                 </tr>
             }
         }

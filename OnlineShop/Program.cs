@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data;
-using Microsoft.AspNetCore.Identity;
-using OnlineShop.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Threading.Tasks;
 using OnlineShop.Extensions;
+using OnlineShop.Models;
 using OnlineShop.Services;
+using System.Threading.Tasks;
 
 namespace OnlineShop
 {
@@ -60,7 +61,15 @@ namespace OnlineShop
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            var provider = new FileExtensionContentTypeProvider();
+            // Add the AVIF MIME type mapping
+            provider.Mappings[".avif"] = "image/avif";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider
+            });
+
 
             app.UseRouting();
 
